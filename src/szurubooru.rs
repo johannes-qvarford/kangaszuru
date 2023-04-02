@@ -23,10 +23,13 @@ impl SzurubooruContext {
         }
 
         #[derive(Deserialize, Debug)]
+        struct Placeholder {}
+
+        #[derive(Deserialize, Debug)]
         #[serde(rename_all = "camelCase")]
         struct ReverseSearchResponse {
-            exact_post: Option<String>,
-            similar_posts: Vec<String>
+            exact_post: Option<Placeholder>,
+            similar_posts: Vec<Placeholder>
         }
 
         let body = serde_json::to_string(&ReverseSearchRequest { content_url: url.to_string() }).unwrap();

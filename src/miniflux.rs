@@ -29,13 +29,22 @@ impl MinifluxContext {
         let text = response.text().unwrap();
         let deserialized: EntriesResponse = serde_json::from_str(&text).unwrap();
         
-        println!("deserialized: {deserialized:?}");
-
         deserialized.entries
     }
 
     pub(crate) fn unfavorite_post(&self, id: i64) {
-        todo!()
+        use reqwest::blocking as reqwest;
+
+        let client = reqwest::Client::new();
+        let response = client.put(format!("https://miniflux.privacy.qvarford.net/v1/entries/{id}/bookmark"))
+            .header("X-Auth-Token", &self.token)
+            .send()
+            .unwrap();
+
+        let status = response.status();
+        dbg!(status);
+        dbg!(response.text().unwrap());
+        assert!(status.is_success());
     }
 }
 
