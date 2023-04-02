@@ -1,0 +1,1 @@
+Personal tool for various automations around szurubooru.

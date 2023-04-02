@@ -1,8 +1,8 @@
 mod miniflux_transfer;
-
-use std::error::Error;
+mod miniflux;
 
 use clap::{Parser, Subcommand};
+use miniflux::MinifluxContext;
 
 /// Simple cli to perform various szurubooru-related tasks.
 #[derive(Parser)]
@@ -27,7 +27,8 @@ fn main() {
             let mut split = secret.split(' ');
             // szurubooru_token is base64 of username:uuid-token, when convering remember not to append \n with echo -n. 
             let (miniflux_token, szurubooru_token) = (split.next().unwrap(), split.next().unwrap());
-            miniflux_transfer::perform(miniflux_token, szurubooru_token);
+            let miniflux_context = MinifluxContext::new(miniflux_token.to_owned());
+            miniflux_transfer::perform(miniflux_context, szurubooru_token);
         }
     }
 }
