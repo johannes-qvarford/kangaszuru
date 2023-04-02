@@ -6,8 +6,8 @@ pub(crate) struct SzurubooruContext {
     token: String
 }
 
-//const SZURUBOORU_BASE_URL: &str = "https://szurubooru.privacy.qvarford.net/api/";
-const SZURUBOORU_BASE_URL: &str = "http://localhost:8080/api/";
+const SZURUBOORU_BASE_URL: &str = "https://szurubooru.privacy.qvarford.net/api/";
+//const SZURUBOORU_BASE_URL: &str = "http://localhost:8080/api/";
 
 impl SzurubooruContext {
     pub(crate) fn new(token: String) -> Self {
@@ -84,9 +84,6 @@ impl SzurubooruContext {
             .send()
             .unwrap();
         let status = response.status();
-
-        dbg!(status);
-        dbg!(response.text().unwrap());
         assert!(status.is_success());
     }
 }
