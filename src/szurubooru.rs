@@ -52,7 +52,38 @@ impl SzurubooruContext {
     }
     
     pub(crate) fn upload_post(&self, link: Url) {
-        // add needs_tagging tag
-        todo!()
+        use reqwest::blocking as reqwest;
+        #[derive(Serialize, Debug)]
+        #[serde(rename_all = "camelCase")]
+        struct Request {
+            content_url: String,
+            tags: Vec<String>,
+            safety: String
+        }
+        let request = Request {
+            content_url: link.to_string(),
+            tags: vec!["tags_needed".to_owned()],
+            safety: "safe".to_owned()
+        };
+
+        let body = serde_json::to_string(&request).unwrap();
+        let token = &self.token;
+    
+        let client = reqwest::Client::new();
+        let req = client.post(format!("{SZURUBOORU_BASE_URL}posts"))
+        .header(CONTENT_TYPE, "text/json")
+        .header(AUTHORIZATION, format!("Token {token}"))
+        // required: https://github.com/rr-/szurubooru/blob/780b7dc6fd1830244a6236905a6e8ce9afcfb993/server/szurubooru/rest/app.py#L77
+        .header(ACCEPT, "application/json")
+        .body(body);
+
+        let response = req
+            .send()
+            .unwrap();
+        let status = response.status();
+
+        dbg!(status);
+        dbg!(response.text().unwrap());
+        assert!(status.is_success());
     }
 }
