@@ -1,8 +1,10 @@
 mod miniflux_transfer;
 mod miniflux;
+mod szurubooru;
 
 use clap::{Parser, Subcommand};
 use miniflux::MinifluxContext;
+use szurubooru::SzurubooruContext;
 
 /// Simple cli to perform various szurubooru-related tasks.
 #[derive(Parser)]
@@ -28,7 +30,8 @@ fn main() {
             // szurubooru_token is base64 of username:uuid-token, when convering remember not to append \n with echo -n. 
             let (miniflux_token, szurubooru_token) = (split.next().unwrap(), split.next().unwrap());
             let miniflux_context = MinifluxContext::new(miniflux_token.to_owned());
-            miniflux_transfer::perform(miniflux_context, szurubooru_token);
+            let szurubooru_context = SzurubooruContext::new(szurubooru_token.to_owned());
+            miniflux_transfer::perform(miniflux_context, szurubooru_context);
         }
     }
 }
