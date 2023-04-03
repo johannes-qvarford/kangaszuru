@@ -42,8 +42,6 @@ impl MinifluxContext {
             .unwrap();
 
         let status = response.status();
-        dbg!(status);
-        dbg!(response.text().unwrap());
         assert!(status.is_success());
     }
 }
