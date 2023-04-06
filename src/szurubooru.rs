@@ -47,8 +47,9 @@ impl SzurubooruContext {
             .send()
             .unwrap();
         let status = response.status();
-        let text = response.text().unwrap();
+        println!("{status}");
         assert!(status.is_success());
+        let text = response.text().unwrap();
         let deserialized: ReverseSearchResponse = serde_json::from_str(&text).unwrap();
     
         return deserialized.exact_post.is_some() || !deserialized.similar_posts.is_empty()
@@ -84,6 +85,7 @@ impl SzurubooruContext {
             .send()
             .unwrap();
         let status = response.status();
+        println!("{status}");
         assert!(status.is_success());
     }
 }

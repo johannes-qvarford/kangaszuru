@@ -24,7 +24,9 @@ impl MinifluxContext {
             .header("X-Auth-Token", &self.token)
             .send()
             .unwrap();
-        assert!(response.status().is_success());
+        let status = response.status();
+        println!("{status}");
+        assert!(status.is_success());
 
         let text = response.text().unwrap();
         let deserialized: EntriesResponse = serde_json::from_str(&text).unwrap();
@@ -42,6 +44,8 @@ impl MinifluxContext {
             .unwrap();
 
         let status = response.status();
+        println!("{status}");
+        assert!(status.is_success());
         assert!(status.is_success());
     }
 }
