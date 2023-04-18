@@ -6,9 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+alphanumeric-sort = "1.5.1"
 chrono = "0.4.24"
 clap = { version = "4.2.1", features = ["derive"] }
-reqwest = { version = "0.11.16", features = ["blocking"] }
+reqwest = { version = "0.11.16", features = ["blocking", "multipart"] }
 rpassword = "7.2.0"
 scraper = "0.15.0"
 serde = { version = "1.0.159", features = ["serde_derive", "derive"] }
